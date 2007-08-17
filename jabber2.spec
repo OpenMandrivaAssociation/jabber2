@@ -115,12 +115,12 @@ rm -rf %buildroot
 %{_sysconfdir}/%{pkgname}/*.dist
 %{_sysconfdir}/%{pkgname}/templates/*.dist
 
-%{_mandir}/man8/c2s.8.bz2
-%{_mandir}/man8/jabberd.8.bz2
-%{_mandir}/man8/resolver.8.bz2
-%{_mandir}/man8/router.8.bz2
-%{_mandir}/man8/s2s.8.bz2
-%{_mandir}/man8/sm.8.bz2
+%{_mandir}/man8/c2s.*
+%{_mandir}/man8/jabberd.*
+%{_mandir}/man8/resolver.*
+%{_mandir}/man8/router.*
+%{_mandir}/man8/s2s.*
+%{_mandir}/man8/sm.*
 
 %defattr (0644,jabberd,jabberd,755)
 %{_var}/run/%{pkgname}
