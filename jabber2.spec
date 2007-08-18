@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
 %define version		2.1.14
-%define release		%mkrel 1
+%define release		%mkrel 2
 %define __libtoolize    /bin/true
 %define libname		%mklibname %{pkgname} 0
 
@@ -46,6 +46,9 @@ Group:		System/Libraries
 
 %description -n %{libname}
 This package contains library files needed for running jabber2.
+
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %prep
 %setup -q -n %{pkgname}-%{version}
