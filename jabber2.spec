@@ -47,7 +47,7 @@ business demands, and maintain compatibility with other messaging systems.
 		--enable-pam=yes \
 		--with-extra-include-path=/usr/include/pgsql \
 		--enable-ipv6=yes \
-		--enablesasl=cyrus \
+		--enable-sasl=cyrus \
 		--enable-debug
 		
 
