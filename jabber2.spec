@@ -15,7 +15,7 @@ License:		GPL
 Group:			System/Servers
 URL:			http://jabberd2.xiaoka.com/
 Source0:		http://ftp.xiaoka.com/jabberd2/releases/%{pkgname}-%version.tar.bz2
-Source1:		%{pkgname}.rc.bz2
+Source1:		%{pkgname}.rc
 BuildRequires:		postgresql-devel 
 BuildRequires:          mysql-devel
 BuildRequires:		openldap-devel 
@@ -70,8 +70,7 @@ rm -rf %buildroot
 mkdir -p %buildroot%{_sysconfdir}/jabberd
 mv %buildroot%{_sysconfdir}/{*.xml,*.cfg,*.dist,templates} %buildroot%{_sysconfdir}/jabberd
 
-mkdir -p ${RPM_BUILD_ROOT}%_initrddir
-bzcat %{SOURCE1} > ${RPM_BUILD_ROOT}%_initrddir/%{pkgname}
+install -D %{SOURCE1} ${RPM_BUILD_ROOT}%_initrddir/%{pkgname}
 
 mkdir -p ${RPM_BUILD_ROOT}%{_var}/run/%{pkgname}
 
