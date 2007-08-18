@@ -26,6 +26,7 @@ BuildRequires:		glibc-devel
 BuildRequires:          zlib-devel
 BuildRequires:		idn-devel
 BuildRequires:          db4-devel
+BuildRequires:		expat-devel
 Conflicts:		jabber
 Requires(post,preun):	rpm-helper
 Requires(pre,postun):	rpm-helper
