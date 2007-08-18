@@ -3,9 +3,9 @@
 %define version		2.1.14
 %define release		%mkrel 1
 %define __libtoolize    /bin/true
+%define libname		%mklibname %{pkgname} 0
 
 %define Summary		Jabber is an instant messaging System
-%define initd 		%{_sysconfdir}/rc.d/init.d
 
 Summary:		%Summary
 Name:			%name
@@ -27,7 +27,9 @@ BuildRequires:          zlib-devel
 BuildRequires:		idn-devel
 BuildRequires:          db4-devel
 Conflicts:		jabber
-BuildRoot:		%_tmppath/%name-buildroot
+Requires(post,preun):	rpm-helper
+Requires(pre,postun):	rpm-helper
+Requires:		%libname = %verison-%release
 
 %description
 Jabber is an instant messaging System, similar to ICQ or AIM, yet far
@@ -37,10 +39,18 @@ cross platform, and created with the future in mind. Jabber has been
 designed from the ground up to serve the needs of the end user, satisfy
 business demands, and maintain compatibility with other messaging systems.
 
+%package -n %{libname}
+Summary:	Library files for jabber2
+Group:		System/Libraries
+
+%description -n %{libname}
+This package contains library files needed for running jabber2.
+
 %prep
 %setup -q -n %{pkgname}-%{version}
 
 %build
+%serverbuild
 %configure2_5x	--enable-pgsql=yes \
 		--enable-db=yes \
 		--enable-ldap=yes \
@@ -55,39 +65,30 @@ business demands, and maintain compatibility with other messaging systems.
 
 %install
 rm -rf %buildroot
-make install	prefix=${RPM_BUILD_ROOT}/usr \
-		bindir=${RPM_BUILD_ROOT}/usr/bin \
-		sysconfdir=${RPM_BUILD_ROOT}/etc/jabberd \
-		mandir=${RPM_BUILD_ROOT}/usr/share/man
+%makeinstall_std
 
-mkdir -p ${RPM_BUILD_ROOT}%{initd}
-bzcat %{SOURCE1} > ${RPM_BUILD_ROOT}%{initd}/%{pkgname}
+mkdir -p %buildroot%{_sysconfdir}/jabberd
+mv %buildroot%{_sysconfdir}/{*.xml,*.cfg,*.dist,templates} %buildroot%{_sysconfdir}/jabberd
+
+mkdir -p ${RPM_BUILD_ROOT}%_initrddir
+bzcat %{SOURCE1} > ${RPM_BUILD_ROOT}%_initrddir/%{pkgname}
 
 mkdir -p ${RPM_BUILD_ROOT}%{_var}/run/%{pkgname}
 
+# remove unused devel files
+rm -f %buildroot%_libdir/%{pkgname}/{*.la,mod_*.so}
+
 %pre
-if ! getent passwd jabberd
-then
-  for i in `seq 50 99` ; do
-    if ! getent passwd | awk -F: '{print $3}' | grep $i > /dev/null ; then
-      if ! getent group | awk -F: '{print $3}' | grep $i > /dev/null ; then
-        groupadd -g $i jabberd > /dev/null
-        useradd -u $i -g jabberd jabberd > /dev/null
-	break
-      fi
-    fi
-  done
-fi
+%_pre_useradd %{pkgname}
 
 %preun
-chkconfig %{name} off
+%_preun_service %{pkgname}
 
 %post
-chkconfig %{name} off
-
+%_post_service %{pkgname}
 
 %postun
-userdel jabberd
+%_postun_userdel %{pkgname}
 
 %clean
 rm -rf %buildroot
@@ -100,7 +101,7 @@ rm -rf %buildroot
 %_bindir/router
 %_bindir/s2s
 %_bindir/sm
-%{initd}/%{pkgname}
+%_initrddir/%{pkgname}
 
 %defattr (0644,root,root,0755)
 %doc COPYING README INSTALL ChangeLog AUTHORS NEWS PROTOCOL TODO tools/db-setup.mysql tools/db-setup.pgsql tools/migrate.pl tools/pipe-auth.pl
@@ -109,6 +110,7 @@ rm -rf %buildroot
 %config(noreplace) %{_sysconfdir}/%{pkgname}/resolver.xml
 %config(noreplace) %{_sysconfdir}/%{pkgname}/router-users.xml
 %config(noreplace) %{_sysconfdir}/%{pkgname}/router.xml
+%config(noreplace) %{_sysconfdir}/%{pkgname}/router-filter.xml
 %config(noreplace) %{_sysconfdir}/%{pkgname}/s2s.xml
 %config(noreplace) %{_sysconfdir}/%{pkgname}/sm.xml
 %config(noreplace) %{_sysconfdir}/%{pkgname}/jabberd.cfg
@@ -125,3 +127,6 @@ rm -rf %buildroot
 
 %defattr (0644,jabberd,jabberd,755)
 %{_var}/run/%{pkgname}
+
+%files -n %{libname}
+%_libdir/%{pkgname}
