@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
-%define version		2.0s9
-%define release		%mkrel 4
+%define version		2.1.14
+%define release		%mkrel 1
 %define __libtoolize    /bin/true
 
 %define Summary		Jabber is an instant messaging System
@@ -13,8 +13,8 @@ Version:		%version
 Release:		%release
 License:		GPL
 Group:			System/Servers
-URL:			http://jabberd.jabberstudio.org/
-Source0:		%{pkgname}-%version.tar.bz2
+URL:			http://jabberd2.xiaoka.com/
+Source0:		http://ftp.xiaoka.com/jabberd2/releases/%{pkgname}-%version.tar.bz2
 Source1:		%{pkgname}.rc.bz2
 BuildRequires:		postgresql-devel 
 BuildRequires:          mysql-devel
@@ -124,4 +124,3 @@ rm -rf %buildroot
 
 %defattr (0644,jabberd,jabberd,755)
 %{_var}/run/%{pkgname}
-
