@@ -78,7 +78,7 @@ mkdir -p ${RPM_BUILD_ROOT}%{_var}/run/%{pkgname}
 rm -f %buildroot%_libdir/%{pkgname}/{*.la,mod_*.so}
 
 %pre
-%_pre_useradd %{pkgname}
+%_pre_useradd %{pkgname} /var/run/%{pkgname} /bin/sh
 
 %preun
 %_preun_service %{pkgname}
