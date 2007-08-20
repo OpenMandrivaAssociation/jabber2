@@ -3,7 +3,6 @@
 %define version		2.1.14
 %define release		%mkrel 2
 %define __libtoolize    /bin/true
-%define libname		%mklibname %{pkgname} 0
 
 %define Summary		Jabber is an instant messaging System
 
@@ -30,7 +29,6 @@ BuildRequires:		expat-devel
 Conflicts:		jabber
 Requires(post,preun):	rpm-helper
 Requires(pre,postun):	rpm-helper
-Requires:		%libname = %verison-%release
 
 %description
 Jabber is an instant messaging System, similar to ICQ or AIM, yet far
@@ -39,16 +37,6 @@ It is open source, absolutely free, simple, fast, extensible, modularized,
 cross platform, and created with the future in mind. Jabber has been
 designed from the ground up to serve the needs of the end user, satisfy
 business demands, and maintain compatibility with other messaging systems.
-
-%package -n %{libname}
-Summary:	Library files for jabber2
-Group:		System/Libraries
-
-%description -n %{libname}
-This package contains library files needed for running jabber2.
-
-%post -n %{libname} -p /sbin/ldconfig
-%postun -n %{libname} -p /sbin/ldconfig
 
 %prep
 %setup -q -n %{pkgname}-%{version}
@@ -63,7 +51,6 @@ This package contains library files needed for running jabber2.
 		--enable-ipv6=yes \
 		--enable-sasl=cyrus \
 		--enable-debug
-		
 
 %make
 
@@ -105,6 +92,7 @@ rm -rf %buildroot
 %_bindir/s2s
 %_bindir/sm
 %_initrddir/%{pkgname}
+%_libdir/%{pkgname}
 
 %defattr (0644,root,root,0755)
 %doc COPYING README INSTALL ChangeLog AUTHORS NEWS PROTOCOL TODO tools/db-setup.mysql tools/db-setup.pgsql tools/migrate.pl tools/pipe-auth.pl
@@ -130,6 +118,3 @@ rm -rf %buildroot
 
 %defattr (0644,jabberd,jabberd,755)
 %{_var}/run/%{pkgname}
-
-%files -n %{libname}
-%_libdir/%{pkgname}
