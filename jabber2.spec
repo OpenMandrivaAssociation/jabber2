@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
 %define version		2.1.14
-%define release		%mkrel 3
+%define release		%mkrel 4
 %define __libtoolize    /bin/true
 
 %define Summary		Jabber is an instant messaging System
