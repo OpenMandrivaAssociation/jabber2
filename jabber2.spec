@@ -12,6 +12,7 @@ Version:		%version
 Release:		%release
 License:		GPL
 Group:			System/Servers
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:			http://jabberd2.xiaoka.com/
 Source0:		http://ftp.xiaoka.com/jabberd2/releases/%{pkgname}-%version.tar.bz2
 Source1:		%{pkgname}.rc
