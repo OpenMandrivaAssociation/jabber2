@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
-%define version		2.1.23
-%define release		%mkrel 6
+%define version		2.2.7.1
+%define release		%mkrel 1
 %define __libtoolize    /bin/true
 
 %{!?_without_pam:BuildRequires: pam-devel}
