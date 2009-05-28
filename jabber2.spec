@@ -30,7 +30,7 @@ BuildRequires:		expat-devel
 BuildRequires:          libgsasl-devel
 Buildrequires:		udns-devel
 %{!?_without_pam:BuildRequires: pam-devel}
-%{!?_without_sqlite:BuildRequires: sqlite-devel}
+%{!?_without_sqlite:BuildRequires: sqlite3-devel}
 %{!?_without_db4:BuildRequires: db4-devel}
 %{!?_without_ldap:BuildRequires: openldap-devel}
 %{!?_without_mysql:BuildRequires: mysql-devel}
