@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
-%define version		2.2.8
-%define release		%mkrel 2
+%define version		2.2.9
+%define release		%mkrel 1
 
 Summary:		OpenSource server implementation of the Jabber protocols
 Name:			%name
@@ -16,7 +16,7 @@ Source1:		%{pkgname}.rc
 Source2:		%{pkgname}.sysconfig
 Source3:		%{pkgname}.logrotate
 Patch0:			%{pkgname}-2.2.8-fix-pid-path.patch
-Patch1:			%{pkgname}-2.2.8-fix-log-path.patch
+Patch1:			%{pkgname}-2.2.9-fix-log-path.patch
 Patch2:			%{pkgname}-2.2.8-fix-pem-path.patch
 Patch3:			%{pkgname}-2.2.8-fix-template-path.patch
 Patch4:			%{pkgname}-2.2.8-fix-router-path.patch
