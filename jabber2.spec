@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
 %define version		2.2.9
-%define release		%mkrel 3
+%define release		%mkrel 4
 
 Summary:		OpenSource server implementation of the Jabber protocols
 Name:			%name
@@ -20,7 +20,7 @@ Patch1:			%{pkgname}-2.2.9-fix-log-path.patch
 Patch2:			%{pkgname}-2.2.8-fix-pem-path.patch
 Patch3:			%{pkgname}-2.2.8-fix-template-path.patch
 Patch4:			%{pkgname}-2.2.8-fix-router-path.patch
-
+Patch5:			%{pkgname}-2.2.9-fix-module-filename.patch
 BuildRequires:		libgc-devel
 BuildRequires:		libpq-devel
 BuildRequires:		openssl-devel
@@ -58,17 +58,13 @@ latest protocol extensions coming out of the JSF.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p0
 
 %build
 autoreconf -f -i
 %serverbuild
 
-# 05/2008 : workaround for a memory leak
-export LIBS='-lgc'
-
-# 05/2008 v2.2.8 : do not set MIO backend to epoll it is broken (segfault)
-# poll and select are Ok
-%configure \
+%configure2_5x \
 	%{!?_without_pam:--enable-pam} \
 	%{?_without_pam:--disable-pam} \
 	%{!?_without_db4:--enable-db} \
