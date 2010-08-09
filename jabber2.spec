@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
-%define version		2.2.9
-%define release		%mkrel 4
+%define version		2.2.11
+%define release		%mkrel 1
 
 Summary:		OpenSource server implementation of the Jabber protocols
 Name:			%name
@@ -10,17 +10,17 @@ Release:		%release
 License:		GPLv2+
 Group:			System/Servers
 BuildRoot: 		%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-URL:			http://jabberd2.xiaoka.com/
-Source0:		http://ftp.xiaoka.com/jabberd2/releases/%{pkgname}-%version.tar.bz2
+URL:			http://codex.xiaoka.com/wiki/jabberd2:start
+Source0:		http://codex.xiaoka.com/pub/jabberd2/releases/%{pkgname}-%{version}.tar.bz2
 Source1:		%{pkgname}.rc
 Source2:		%{pkgname}.sysconfig
 Source3:		%{pkgname}.logrotate
 Patch0:			%{pkgname}-2.2.8-fix-pid-path.patch
 Patch1:			%{pkgname}-2.2.9-fix-log-path.patch
-Patch2:			%{pkgname}-2.2.8-fix-pem-path.patch
-Patch3:			%{pkgname}-2.2.8-fix-template-path.patch
-Patch4:			%{pkgname}-2.2.8-fix-router-path.patch
-Patch5:			%{pkgname}-2.2.9-fix-module-filename.patch
+Patch2:			%{pkgname}-2.2.11-fix-pem-path.patch
+Patch3:			%{pkgname}-2.2.11-fix-template-path.patch
+Patch4:			%{pkgname}-2.2.11-fix-router-path.patch
+Patch5:			%{pkgname}-2.2.11-fix-module-filename.patch
 BuildRequires:		libgc-devel
 BuildRequires:		libpq-devel
 BuildRequires:		openssl-devel
@@ -55,7 +55,7 @@ latest protocol extensions coming out of the JSF.
 %setup -q -n %{pkgname}-%{version}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+%patch2 -p0
 %patch3 -p1
 %patch4 -p1
 %patch5 -p0
@@ -141,7 +141,7 @@ rm -rf %{buildroot}
 %defattr (0644,root,root,0755)
 %doc COPYING README INSTALL ChangeLog AUTHORS NEWS TODO
 %doc tools/db-setup.mysql tools/db-setup.pgsql
-%doc tools/migrate.pl tools/pipe-auth.pl examples
+%doc tools/*.pl examples
 %{_sysconfdir}/logrotate.d/%{pkgname}
 %{_sysconfdir}/sysconfig/%{pkgname}
 %dir %{_sysconfdir}/%{pkgname}
