@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
 %define version		2.2.11
-%define release		%mkrel 4
+%define release		%mkrel 5
 
 Summary:		OpenSource server implementation of the Jabber protocols
 Name:			%name
