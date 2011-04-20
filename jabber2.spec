@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
 %define version		2.2.11
-%define release		%mkrel 5
+%define release		%mkrel 6
 
 Summary:		OpenSource server implementation of the Jabber protocols
 Name:			%name
@@ -32,7 +32,7 @@ BuildRequires:          libgsasl-devel
 Buildrequires:		udns-devel
 %{!?_without_pam:BuildRequires: pam-devel}
 %{!?_without_sqlite:BuildRequires: sqlite3-devel}
-%{!?_without_db4:BuildRequires: db4-devel}
+%{!?_without_db4:BuildRequires: db-devel}
 %{!?_without_ldap:BuildRequires: openldap-devel}
 %{!?_without_mysql:BuildRequires: mysql-devel}
 %{!?_without_postgresql:BuildRequires: postgresql-devel}
