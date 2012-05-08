@@ -1,7 +1,7 @@
 %define pkgname         jabberd
 %define name		jabber2
-%define version		2.2.11
-%define release		%mkrel 6
+%define version		2.2.16
+%define release		1
 
 Summary:		OpenSource server implementation of the Jabber protocols
 Name:			%name
@@ -11,7 +11,7 @@ License:		GPLv2+
 Group:			System/Servers
 BuildRoot: 		%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:			http://codex.xiaoka.com/wiki/jabberd2:start
-Source0:		http://codex.xiaoka.com/pub/jabberd2/releases/%{pkgname}-%{version}.tar.bz2
+Source0:		http://codex.xiaoka.com/pub/jabberd2/releases/%{pkgname}-%{version}.tar.gz
 Source1:		%{pkgname}.rc
 Source2:		%{pkgname}.sysconfig
 Source3:		%{pkgname}.logrotate
