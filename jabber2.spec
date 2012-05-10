@@ -21,6 +21,7 @@ Patch2:			%{pkgname}-2.2.11-fix-pem-path.patch
 Patch3:			%{pkgname}-2.2.11-fix-template-path.patch
 Patch4:			%{pkgname}-2.2.11-fix-router-path.patch
 Patch5:			%{pkgname}-2.2.11-fix-module-filename.patch
+Patch6:			%{pkgname}-2.2.16-link.patch
 BuildRequires:		libgc-devel
 BuildRequires:		libpq-devel
 BuildRequires:		openssl-devel
@@ -60,6 +61,7 @@ latest protocol extensions coming out of the JSF.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p0
+%patch6 -p0
 
 %build
 autoreconf -f -i
@@ -106,16 +108,17 @@ install -m644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/%{pkgname}
 install -m644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{pkgname}
 
 # and move some conf files to /etc/jabberd
-mv %{buildroot}%{_sysconfdir}/{*.xml,*.cfg,*.dist,templates} %{buildroot}%{_sysconfdir}/%{pkgname}
+mv %{buildroot}%{_sysconfdir}/{*.xml,*.cfg,*.conf,*.dist,templates} %{buildroot}%{_sysconfdir}/%{pkgname}
 
-# prepare to doc .dist files
+# prepare to doc .dist files
 mkdir examples
 mv %{buildroot}%{_sysconfdir}/%{pkgname}/{*.dist,templates/*.dist} examples
 
 # we have our own start script
 rm -f %{buildroot}%{_bindir}/%{pkgname}
 rm -f %{buildroot}%{_sysconfdir}/%{pkgname}/%{pkgname}.cfg*
-
+rm -f %{buildroot}%{_sysconfdir}/%{pkgname}/%{pkgname}-*.conf
+rm -rf %{buildroot}%{_prefix}%{_sysconfdir}/init
 # remove unused devel files
 rm -f %{buildroot}%{_libdir}/%{pkgname}/*.la
 
@@ -152,7 +155,7 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{pkgname}/router-filter.xml
 %config(noreplace) %{_sysconfdir}/%{pkgname}/s2s.xml
 %config(noreplace) %{_sysconfdir}/%{pkgname}/sm.xml
-%config(noreplace) %{_sysconfdir}/%{pkgname}/templates/roster.xml
+%config(noreplace) %{_sysconfdir}/%{pkgname}/templates
 %{_mandir}/man8/*
 %defattr (0644,jabberd,jabberd,755)
 %{_var}/run/%{pkgname}
