@@ -30,6 +30,7 @@ BuildRequires:		idn-devel
 BuildRequires:		expat-devel
 BuildRequires:          libgsasl-devel
 Buildrequires:		udns-devel
+BuildRequires:		cppunit-devel
 %{!?_without_pam:BuildRequires: pam-devel}
 %{!?_without_sqlite:BuildRequires: sqlite3-devel}
 %{!?_without_db4:BuildRequires: db-devel}
