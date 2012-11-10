@@ -1,0 +1,101 @@
+
+diff -p -up jabberd-2.2.9/etc/c2s.xml.dist.in.log jabberd-2.2.9/etc/c2s.xml.dist.in
+--- jabberd-2.2.9/etc/c2s.xml.dist.in.log	2009-11-06 17:06:31.000000000 +0100
++++ jabberd-2.2.9/etc/c2s.xml.dist.in	2009-11-06 17:06:31.000000000 +0100
+@@ -50,7 +50,7 @@
+   </router>
+ 
+   <!-- Log configuration - type is "syslog", "file" or "stdout" -->
+-  <log type='syslog'>
++  <log type='file'>
+     <!-- If logging to syslog, this is the log ident -->
+     <ident>jabberd/c2s</ident>
+ 
+@@ -59,9 +59,9 @@
+     <facility>local3</facility>
+ 
+     <!-- If logging to file, this is the filename of the logfile -->
+-    <!--
+-    <file>@localstatedir@/@package@/log/c2s.log</file>
+-    -->
++
++    <file>/var/log/jabberd/c2s.log</file>
++
+ 
+     <!-- Filename of the debug logfile -->
+     <!--
+diff -p -up jabberd-2.2.9/etc/router.xml.dist.in.log jabberd-2.2.9/etc/router.xml.dist.in
+--- jabberd-2.2.9/etc/router.xml.dist.in.log	2009-11-06 17:06:31.000000000 +0100
++++ jabberd-2.2.9/etc/router.xml.dist.in	2009-11-06 17:06:31.000000000 +0100
+@@ -8,7 +8,7 @@
+   <pidfile>/var/run/jabberd/router.pid</pidfile>
+ 
+   <!-- Log configuration - type is "syslog", "file" or "stdout" -->
+-  <log type='syslog'>
++  <log type='file'>
+     <!-- If logging to syslog, this is the log ident -->
+     <ident>jabberd/router</ident>
+ 
+@@ -17,9 +17,9 @@
+     <facility>local3</facility>
+ 
+     <!-- If logging to file, this is the filename of the logfile -->
+-    <!--
+-    <file>@localstatedir@/@package@/log/router.log</file>
+-    -->
++
++    <file>/var/log/jabberd/router.log</file>
++
+ 
+     <!-- Filename of the debug logfile -->
+     <!--
+diff -p -up jabberd-2.2.9/etc/s2s.xml.dist.in.log jabberd-2.2.9/etc/s2s.xml.dist.in
+--- jabberd-2.2.9/etc/s2s.xml.dist.in.log	2009-11-06 17:06:31.000000000 +0100
++++ jabberd-2.2.9/etc/s2s.xml.dist.in	2009-11-06 17:06:31.000000000 +0100
+@@ -60,7 +60,7 @@
+   </router>
+ 
+   <!-- Log configuration - type is "syslog", "file" or "stdout" -->
+-  <log type='syslog'>
++  <log type='file'>
+     <!-- If logging to syslog, this is the log ident -->
+     <ident>jabberd/s2s</ident>
+ 
+@@ -69,9 +69,9 @@
+     <facility>local3</facility>
+ 
+     <!-- if logging to file, this is the filename of the logfile -->
+-    <!--
+-    <file>@localstatedir@/@package@/log/s2s.log</file>
+-    -->
++
++    <file>/var/log/jabberd/s2s.log</file>
++
+ 
+     <!-- Filename of the debug logfile -->
+     <!--
+diff -p -up jabberd-2.2.9/etc/sm.xml.dist.in.log jabberd-2.2.9/etc/sm.xml.dist.in
+--- jabberd-2.2.9/etc/sm.xml.dist.in.log	2009-11-06 17:06:31.000000000 +0100
++++ jabberd-2.2.9/etc/sm.xml.dist.in	2009-11-06 17:12:20.000000000 +0100
+@@ -50,7 +50,7 @@
+   </router>
+ 
+   <!-- Log configuration - type is "syslog", "file" or "stdout" -->
+-  <log type='syslog'>
++  <log type='file'>
+     <!-- If logging to syslog, this is the log ident -->
+     <ident>jabberd/sm</ident>
+ 
+@@ -59,9 +59,9 @@
+     <facility>local3</facility>
+ 
+     <!-- If logging to file, this is the filename of the logfile -->
+-    <!--
+-    <file>@localstatedir@/@package@/log/sm.log</file>
+-    -->
++    
++    <file>/var/log/jabberd/sm.log</file>
++    
+ 
+     <!-- Filename of the debug logfile -->
+     <!--

@@ -1,0 +1,11 @@
+--- jabberd-2.2.11/etc/sm.xml.dist.in.temp	2010-08-09 07:05:51.000000000 +0200
++++ jabberd-2.2.11/etc/sm.xml.dist.in	2010-08-09 07:06:34.000000000 +0200
+@@ -679,7 +679,7 @@
+            stored in the users data store when they are created. -->
+       <!-- If you defined publish, you should comment-out <roster> -->
+       <!--
+-      <roster>@sysconfdir@/templates/roster.xml</roster>
++      <roster>@sysconfdir@/jabberd/templates/roster.xml</roster>
+       -->
+     </template>
+   </user>

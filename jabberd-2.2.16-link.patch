@@ -1,0 +1,10 @@
+--- storage/Makefile.am.orig	2012-05-10 15:23:23.787747192 +0100
++++ storage/Makefile.am	2012-05-10 15:23:38.808747735 +0100
+@@ -12,6 +12,7 @@
+ pkglib_LTLIBRARIES += libstorage.la
+ libstorage_la_SOURCES = storage.h storage.c object.c
+ libstorage_la_CPPFLAGS = -DLIBRARY_DIR=\"$(pkglibdir)\"
++libstorage_la_LIBADD = ../util/libutil.la
+ 
+ if STORAGE_ANON
+ pkglib_LTLIBRARIES += authreg_anon.la

@@ -1,0 +1,20 @@
+--- jabberd-2.2.11/etc/router.xml.dist.in.router	2010-08-09 07:08:19.000000000 +0200
++++ jabberd-2.2.11/etc/router.xml.dist.in	2010-08-09 07:09:08.000000000 +0200
+@@ -33,7 +33,7 @@
+     <!-- File containing the user table. This is where the router gets
+          its component and secret information from for component
+          authentication.-->
+-    <users>@sysconfdir@/router-users.xml</users>
++    <users>@sysconfdir@/jabberd/router-users.xml</users>
+ 
+     <!-- Shared secret used to identify XEP-0114 components (that is,
+          "jabber:component:accept" components that authenticate using
+@@ -191,7 +191,7 @@
+ 
+     <!-- File containing packet filter rules.
+          May be used for fine grained packet routing control. -->
+-    <filter>@sysconfdir@/router-filter.xml</filter>
++    <filter>@sysconfdir@/jabberd/router-filter.xml</filter>
+ 
+   </aci>
+ 
