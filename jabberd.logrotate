@@ -1,0 +1,8 @@
+/var/log/jabberd/*.log {
+   weekly
+   missingok
+   rotate 7
+   copytruncate
+   delaycompress
+   compress
+}

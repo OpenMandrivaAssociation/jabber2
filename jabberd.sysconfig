@@ -1,0 +1,14 @@
+# /etc/sysconfig/jabberd
+# this files controls which daemons are started by the jabberd startscript
+#
+# the following example shows a configuration for a startup of jabberd daemons
+# necessary for a jabberd server running on one host
+# START_DAEMONS="router sm c2s s2s"
+#
+# a jabberd server consists of:
+# * router
+# * sm (Session Manager)
+# * c2s (Client to Server)
+# * s2s (Server to Server)
+#
+START_DAEMONS="router sm c2s s2s"

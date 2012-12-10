@@ -1,5 +1,2 @@
 sources:
-  "jabberd-2.2.16.tar.gz:"	d39f7475ec676a127e948f2c5f73d7605ec5a7f9
-  "jabberd.logrotate:"	3b9444861ec623ad263110500b4444b8bdc114ac
-  "jabberd.rc:"	06975597c88fdb28c9e0c261faab2331100ff372
-  "jabberd.sysconfig:"	62e6379769d41b028cf80a4f7dad8572161652af
+  "jabberd-2.2.16.tar.gz": d39f7475ec676a127e948f2c5f73d7605ec5a7f9

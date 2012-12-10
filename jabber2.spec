@@ -9,7 +9,6 @@ Version:		%version
 Release:		%release
 License:		GPLv2+
 Group:			System/Servers
-BuildRoot: 		%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:			http://codex.xiaoka.com/wiki/jabberd2:start
 Source0:		http://codex.xiaoka.com/pub/jabberd2/releases/%{pkgname}-%{version}.tar.gz
 Source1:		%{pkgname}.rc
@@ -22,14 +21,15 @@ Patch3:			%{pkgname}-2.2.11-fix-template-path.patch
 Patch4:			%{pkgname}-2.2.11-fix-router-path.patch
 Patch5:			%{pkgname}-2.2.11-fix-module-filename.patch
 Patch6:			%{pkgname}-2.2.16-link.patch
-BuildRequires:		libgc-devel
-BuildRequires:		libpq-devel
-BuildRequires:		openssl-devel
+patch7:			jabberd-2.2.16.interpreter.patch
+BuildRequires:		gc-devel
+BuildRequires:		pq-devel
+BuildRequires:		pkgconfig(openssl)
 BuildRequires:		glibc-devel 
-BuildRequires:          zlib-devel
+BuildRequires:          pkgconfig(zlib)
 BuildRequires:		idn-devel
 BuildRequires:		expat-devel
-BuildRequires:          libgsasl-devel
+BuildRequires:          pkgconfig(libgsasl)
 Buildrequires:		udns-devel
 BuildRequires:		cppunit-devel
 %{!?_without_pam:BuildRequires: pam-devel}
@@ -62,6 +62,7 @@ latest protocol extensions coming out of the JSF.
 %patch4 -p1
 %patch5 -p0
 %patch6 -p0
+%patch7 -p1 -b .interpreter
 
 %build
 autoreconf -f -i
@@ -87,7 +88,6 @@ autoreconf -f -i
 %make
 
 %install
-rm -rf %buildroot
 %makeinstall_std
 
 # create needed directories 
@@ -119,11 +119,6 @@ rm -f %{buildroot}%{_bindir}/%{pkgname}
 rm -f %{buildroot}%{_sysconfdir}/%{pkgname}/%{pkgname}.cfg*
 rm -f %{buildroot}%{_sysconfdir}/%{pkgname}/%{pkgname}-*.conf
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}/init
-# remove unused devel files
-rm -f %{buildroot}%{_libdir}/%{pkgname}/*.la
-
-%clean
-rm -rf %{buildroot}
 
 %pre
 %_pre_useradd %{pkgname} %{_var}/lib/%{pkgname} /bin/sh
@@ -161,4 +156,104 @@ rm -rf %{buildroot}
 %{_var}/run/%{pkgname}
 %{_var}/lib/%{pkgname}
 %{_logdir}/%{pkgname}
+
+
+
+%changelog
+* Thu May 10 2012 Crispin Boylan <crisb@mandriva.org> 2.2.16-1
++ Revision: 798032
+- Patch6: Fix link
+- Update patches
+- New release
+
+  + Bogdano Arendartchuk <bogdano@mandriva.com>
+    - build with db 5.1 (from fwang | 2011-04-12 11:10:18 +0200)
+
+* Thu Mar 17 2011 Oden Eriksson <oeriksson@mandriva.com> 2.2.11-5
++ Revision: 645806
+- relink against libmysqlclient.so.18
+
+* Sat Jan 01 2011 Oden Eriksson <oeriksson@mandriva.com> 2.2.11-4mdv2011.0
++ Revision: 627252
+- rebuilt against mysql-5.5.8 libs, again
+
+* Thu Dec 30 2010 Oden Eriksson <oeriksson@mandriva.com> 2.2.11-3mdv2011.0
++ Revision: 626531
+- rebuilt against mysql-5.5.8 libs
+
+* Mon Aug 09 2010 Funda Wang <fwang@mandriva.org> 2.2.11-1mdv2011.0
++ Revision: 567844
+- New version 2.2.11
+
+* Wed Apr 28 2010 Funda Wang <fwang@mandriva.org> 2.2.9-4mdv2010.1
++ Revision: 539941
+- use correct name for plugins
+
+* Wed Dec 30 2009 Jérôme Brenier <incubusss@mandriva.org> 2.2.9-3mdv2010.1
++ Revision: 484068
+- rebuild for db-4.8
+
+* Sun Nov 08 2009 Jérôme Brenier <incubusss@mandriva.org> 2.2.9-2mdv2010.1
++ Revision: 463209
+- fix sm log path
+
+* Fri Nov 06 2009 Jérôme Brenier <incubusss@mandriva.org> 2.2.9-1mdv2010.1
++ Revision: 461726
+- update to new version 2.2.9
+- rediff P1
+
+* Sat May 30 2009 Jérôme Brenier <incubusss@mandriva.org> 2.2.8-2mdv2010.0
++ Revision: 381269
+- add a workaround for a memory leak and the associated BR
+
+* Thu May 28 2009 Jérôme Brenier <incubusss@mandriva.org> 2.2.8-1mdv2010.0
++ Revision: 380642
+- fix BR on sqlite3
+- readd default runlevels (initscript)
+- new version 2.2.8
+- spec file reworked
+- add 5 patches to fix paths in conf files
+- add a sysconfig file
+- add logrotate
+- fix initscript
+- add missings BR and remove duplicates
+- use poll MIO backend
+- use autoreconf
+
+  + Luis Daniel Lucio Quiroz <dlucio@mandriva.org>
+    - 2.2.7.1
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+    - fix no-buildroot-tag
+
+  + Nicolas Lécureuil <nlecureuil@mandriva.com>
+    - New version 2.1.23
+      Sync spec file with fedora
+
+* Fri Sep 21 2007 Nicolas Lécureuil <nlecureuil@mandriva.com> 2.1.14-4mdv2008.0
++ Revision: 91998
+- [BUGFIX] Add missing slash (Bug  #33855)
+
+* Mon Aug 20 2007 Funda Wang <fwang@mandriva.org> 2.1.14-3mdv2008.0
++ Revision: 67319
+- fix bug#32693
+
+* Sat Aug 18 2007 Funda Wang <fwang@mandriva.org> 2.1.14-2mdv2008.0
++ Revision: 66424
+- add ldconfig for lib package
+- align startup script with jabber
+
+* Sat Aug 18 2007 Funda Wang <fwang@mandriva.org> 2.1.14-1mdv2008.0
++ Revision: 66421
+- BR expat
+- fix pre script
+- pinit friendly
+- bunzip source1
+- Fix building and file list
+- use cyrus sasl implementation rather gsasl
+- New versino 2.1.14
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - fix man pages
 

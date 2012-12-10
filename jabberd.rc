@@ -1,0 +1,171 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides: jabber jserver
+# Required-Start: $network
+# Required-Stop: $network
+# Default-Start: 2 3 4 5
+# Short-Description: jabberd server
+# Description: jabberd is the next generation of the jabberd server
+### END INIT INFO
+#
+# Raymond 25DEC2003 support@bigriverinfotech.com
+# /etc/rc.d/init.d/jabberd
+# init script for jabberd processes
+# Tested under jabberd-2.0rc2 and Fedora 1.0 only
+#
+# Thu Oct 28 2004 Jorrit Jorritsma <jjorritsma@aboveit.nl>
+# Made it Mandrake compiant
+#
+# processname: jabberd
+# description: jabberd is the next generation of the jabberd server
+# chkconfig: 2345 85 15
+
+if [ -f /etc/init.d/functions ]; then
+	. /etc/init.d/functions
+elif [ -f /etc/rc.d/init.d/functions ]; then
+	. /etc/rc.d/init.d/functions
+else
+	gprintf "\ajabberd: unable to locate functions lib. Cannot continue.\n"
+	exit -1
+fi
+
+# sysconfig settings
+if [ -f /etc/sysconfig/jabberd ]; then
+	. /etc/sysconfig/jabberd
+fi
+if [ -z "$START_DAEMONS" ]; then
+	START_DAEMONS="router sm c2s s2s"
+fi
+
+progs="$START_DAEMONS"
+progsPath="/usr/bin"
+confPath="/etc/jabberd"
+pidPath="/var/run/jabberd"
+
+retval=0
+
+ReqBins ( ) {
+	for prog in ${progs}; do
+		if [ ! -x ${progsPath}/${prog} ]; then
+			gprintf "jabberd binary [%s] not found." "${prog}"
+			StatusFailed
+			gprintf "Cannot continue.\n"
+			return -1
+		fi
+	done
+	return 0
+}
+
+ReqConfs ( ) {
+	for prog in ${progs}; do
+		if [ ! -f ${confPath}/${prog}.xml ]; then
+			gprintf "jabberd configuration [%s.xml] not found." "${prog}"
+			StatusFailed
+			gprintf "Cannot continue.\n"
+			return -1
+		fi
+	done
+	return 0
+}
+
+ReqDirs ( ) {
+	if [ ! -d ${pidPath} ]; then
+		gprintf "jabberd PID directory not found. Cannot continue."
+		StatusFailed
+		return -1
+	fi
+	return 0
+}
+
+Status ( ) {
+	for prog in ${progs}; do
+		if [ $( pidof -s ${prog} ) ]; then
+			gprintf "\tprocess [%s] is running" "${prog}"
+			echo
+		else
+			gprintf "\tprocess [%s] is not running" "${prog}"
+			echo
+		fi
+	done
+}
+
+Start ( ) {
+	for req in ReqBins ReqConfs ReqDirs; do
+		${req}
+		retval=$?
+		[ ${retval} == 0 ] || return ${retval}
+	done
+	gprintf "Initializing jabberd processes ...\n"
+	for prog in ${progs}; do
+		if [ $( pidof -s ${prog} ) ]; then
+			gprintf "\tprocess [%s] already running" "${prog}"
+			StatusFailed
+			sleep 1
+			continue
+		fi
+		gprintf "\tStarting %s: " "${prog}"
+		rm -f /var/lock/subsys/${prog}
+		rm -f ${pidPath}/${prog}.pid
+		args="-c ${confPath}/${prog}.xml"
+		command="${progsPath}/${prog} ${args} & > /dev/null"
+		daemon --user jabberd $command
+		echo
+		retval=$?
+		if [ ${retval} == 0 ]; then
+			touch /var/lock/subsys/${prog}
+		else
+			Stop
+			let retval=-1
+			break
+		fi
+		sleep 1
+	done
+	return ${retval}
+}
+
+Stop ( ) {
+	gprintf "Terminating jabberd processes ...\n"
+	for prog in ${progs}; do
+		gprintf "\tStopping %s: " "${prog}"
+		killproc ${prog}
+		retval=$?
+		if [ ${retval} == 0 ]; then
+			rm -f /var/lock/subsys/${prog}
+			rm -f ${pidPath}/${prog}.pid
+		fi
+		echo
+		sleep 1
+	done
+	return ${retval}
+}
+
+case "$1" in
+	start)
+		Start
+		;;
+	stop)
+		Stop
+		;;
+	status)
+		Status
+		;;
+	restart)
+		Stop
+		Start
+		;;
+	reload)
+		Stop
+		Start
+		;;
+	condrestart)
+		if [ -f /var/lock/subsys/${prog} ]; then
+			Stop
+			sleep 3
+			Start
+		fi
+		;;
+	*)
+		gprintf "Usage: %s {start|stop|restart|condrestart}\n" "$0"
+		let retval=-1
+esac
+exit ${retval}
