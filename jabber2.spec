@@ -9,7 +9,7 @@ Version:		%version
 Release:		%release
 License:		GPLv2+
 Group:			System/Servers
-URL:			http://codex.xiaoka.com/wiki/jabberd2:start
+URL:			https://codex.xiaoka.com/wiki/jabberd2:start
 Source0:		http://codex.xiaoka.com/pub/jabberd2/releases/%{pkgname}-%{version}.tar.gz
 Source1:		%{pkgname}.rc
 Source2:		%{pkgname}.sysconfig
